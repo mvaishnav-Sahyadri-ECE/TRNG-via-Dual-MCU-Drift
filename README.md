@@ -94,11 +94,11 @@ Random: 89  | ########
 ![WhatsApp Image 2026-01-04 at 3 23 26 PM](https://github.com/user-attachments/assets/a87c1fe3-b07f-4ec4-b333-9c38bcddc003)
 
 
-## Demo
+### Demo
 
 https://github.com/user-attachments/assets/bda660c8-3830-4443-940b-41cdaf255471
 
-## Required Setups
+# Required Setups
 
 [Processing](https://processing.org/download)
 [Arduino IDE](https://www.arduino.cc/en/software/)
