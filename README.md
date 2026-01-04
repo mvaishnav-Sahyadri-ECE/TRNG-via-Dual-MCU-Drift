@@ -79,7 +79,8 @@ This ensures that even a biased source produces a uniform output distribution.
 ### Entropy Visualization (White Noise)
 If the generator is working correctly, the visualizer will display a "TV Static" pattern. This indicates **High Entropy** (no repeating patterns, stripes, or waves).
 
-*(Add your screenshot here)*
+<img width="937" height="672" alt="Screenshot 2026-01-03 233246" src="https://github.com/user-attachments/assets/28e109a1-423d-44c5-93ff-73219cd5ef8a" />
+
 
 ### Sample Output (Serial Terminal)
 ```text
