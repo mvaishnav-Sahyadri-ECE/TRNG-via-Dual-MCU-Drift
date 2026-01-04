@@ -98,7 +98,7 @@ Random: 89  | ########
 
 https://github.com/user-attachments/assets/bda660c8-3830-4443-940b-41cdaf255471
 
-@@ Required Setups
+## Required Setups
 
 [Processing](https://processing.org/download)
 [Arduino IDE](https://www.arduino.cc/en/software/)
