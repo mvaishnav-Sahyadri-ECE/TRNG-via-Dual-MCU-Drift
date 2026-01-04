@@ -1,0 +1,26 @@
+// --- SENDER CODE (Upload to ESP32 #1) ---
+// PINOUT: Connect Pin 23 to Pin 26 of the other board.
+// Connect GND to GND.
+
+const int signalPin = 23;
+
+void setup() {
+  // Generate a "Prime Number" frequency (approx 4.13 MHz)
+  // This prevents the two clocks from synchronizing perfectly.
+  ledcSetup(0, 4133337, 1); 
+  ledcAttachPin(signalPin, 0);
+  ledcWrite(0, 1); // Start the square wave (50% duty)
+}
+
+void loop() {
+  // --- THERMAL STRESS LOOP ---
+  // We perform complex math to heat up the CPU core.
+  // This causes the crystal oscillator to drift physically.
+  volatile float x = 0;
+  for(int i=0; i<3000; i++) {
+    x = sin(i) * tan(i);
+  }
+  
+  // Random micro-delay to add jitter to the power rail voltage
+  delayMicroseconds(micros() % 11); 
+}

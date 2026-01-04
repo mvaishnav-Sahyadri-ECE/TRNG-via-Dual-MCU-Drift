@@ -1,0 +1,42 @@
+// --- RECEIVER CODE (Upload to ESP32 #2) ---
+// PINOUT: Connect Pin 26 to Pin 23 of the Sender.
+// Connect GND to GND.
+
+const int inputPin = 26; 
+
+void setup() {
+  // High-speed Serial for image transfer
+  Serial.begin(230400); 
+  pinMode(inputPin, INPUT);
+}
+
+void loop() {
+  byte cleanByte = 0;
+  int bitsCollected = 0;
+
+  // Collect 8 valid bits to make 1 Byte (0-255)
+  while(bitsCollected < 8) {
+    
+    // 1. Read First Sample
+    int bitA = digitalRead(inputPin);
+    
+    // 2. DYNAMIC JITTER DELAY
+    // Wait a random time (2-5us) to ensure we don't lock sync
+    delayMicroseconds(2 + (micros() % 4)); 
+    
+    // 3. Read Second Sample
+    int bitB = digitalRead(inputPin);
+    
+    // 4. VON NEUMANN WHITENING
+    // Only process if the bits are different (01 or 10)
+    // This removes bias/patterns from the stream.
+    if (bitA != bitB) {
+      cleanByte = (cleanByte << 1) | bitA;
+      bitsCollected++;
+    }
+  }
+
+  // --- OUTPUT ---
+  // Send the raw binary number to the computer
+  Serial.write(cleanByte);
+}
