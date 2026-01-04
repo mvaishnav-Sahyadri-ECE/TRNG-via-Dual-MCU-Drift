@@ -89,8 +89,12 @@ Random: 6   | #
 Random: 211 | ###################
 Random: 89  | ########
 ```
+## Setup
 
-## Demmo
+![WhatsApp Image 2026-01-04 at 3 23 26 PM](https://github.com/user-attachments/assets/a87c1fe3-b07f-4ec4-b333-9c38bcddc003)
+
+
+## Demo
 
 https://github.com/user-attachments/assets/bda660c8-3830-4443-940b-41cdaf255471
 
