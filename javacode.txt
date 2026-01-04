@@ -1,0 +1,96 @@
+import processing.serial.*;
+
+Serial myPort;
+int xPos = 0;
+int yPos = 0;
+int pixelSize = 4; // Size of the static squares
+
+// Variable to store the latest number for the text display
+int latestByte = 0;
+PFont bigFont;
+
+void setup() {
+  // Window is wider now (750px) to make room for the text panel
+  size(750, 512); 
+  background(0);
+  noStroke();
+
+  // Create a cool font style
+  bigFont = createFont("Arial Bold", 48);
+  textFont(bigFont);
+
+  String portName = "COM4"; // Your Port
+
+  try {
+    myPort = new Serial(this, portName, 230400);
+    myPort.buffer(1);
+    println("Connected!");
+  } catch (Exception e) {
+    println("ERROR: Close Arduino Serial Monitor!");
+  }
+}
+
+// The 'draw' loop handles the Text Display (Updates 60 times/sec)
+void draw() {
+  // 1. Draw a black box over the Right Side to clear old text
+  fill(0); // Black
+  rect(512, 0, 238, 512); 
+  
+  // 2. Draw the separator line
+  stroke(100);
+  strokeWeight(2);
+  line(512, 0, 512, 512);
+  noStroke(); // Turn stroke back off for pixels
+
+  // 3. Display the Titles
+  fill(150); // Gray text
+  textSize(20);
+  text("ENTROPY SOURCE", 530, 50);
+  text("TRNG-ESP32", 530, 80);
+  
+  text("Raw Value (0-255):", 530, 200);
+
+  // 4. Display the BIG Live Number
+  fill(0, 255, 0); // Matrix Green
+  textSize(80);
+  text(latestByte, 530, 280);
+  
+  // 5. Visual flair (Optional)
+  textSize(16);
+  fill(255);
+  text("Status: HARVESTING", 530, 480);
+}
+
+// The 'serialEvent' handles the Static Grid (Runs as fast as possible)
+void serialEvent(Serial myPort) {
+  try {
+    int inByte = myPort.read();
+    
+    // Save this number so the 'draw' loop can show it as text
+    latestByte = inByte;
+
+    // --- DRAW THE STATIC GRID (LEFT SIDE ONLY) ---
+    fill(inByte); // Grayscale color
+    rect(xPos, yPos, pixelSize, pixelSize);
+
+    // Move cursor
+    xPos += pixelSize;
+    
+    // If we hit the divider line (512px), wrap around
+    if (xPos >= 512) {
+      xPos = 0;
+      yPos += pixelSize;
+      
+      // If we hit bottom, clear ONLY the left side
+      if (yPos >= height) {
+        yPos = 0;
+        
+        // Draw black rect over just the grid area
+        fill(0);
+        rect(0, 0, 512, 512); 
+      }
+    }
+  } catch (Exception e) {
+    // Ignore errors
+  }
+}
